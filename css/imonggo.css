@@ -1,0 +1,24 @@
+.collapsible-header.black{
+	color: white;
+	border-bottom: 1px solid black;
+}
+
+.collapsible-header.blue-grey.darken-4{
+	color: white;
+	border-bottom: 1px solid #263238;
+}
+
+.collapsible-header.blue-grey.darken-1{
+	color: white;
+	border-bottom: 1px solid #546e7a;
+}
+
+
+img{
+	opacity: 0.8;
+}
+
+
+#multiple_prod{
+	width: 30%;
+}
