@@ -9,15 +9,14 @@ $inventories = array_filter(get_inventories());
 $get_output = get_products();
 $response = $get_output[0];
 $tags = $get_output[1];
-
+ 
 
   if(isset($_GET['post_products'])){
 
-
     if(!empty($inventories)){
 
-      post_products($response, $post_tags,$inventories);
       $post_tags = $_GET['checkbox_name'];
+      post_products($response, $post_tags,$inventories);
       
     }else{
       $error_msg="Error: No product available";
