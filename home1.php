@@ -1,10 +1,34 @@
 <?php
 
-include'login.php'; 
+session_start();
 
-if(isset($_SESSION['login_user'])){
-	header("location: main.php");
+include 'general_functions.php';
+
+if(isset($_SESSION['imonggo_api_token'])){
+  header('Location:main.php');
+  //echo "isset";
 }
+
+if(isset($_POST['login'])){
+  $_SESSION['acct_id']=$_POST['acct_id'];
+  $_SESSION['email']=$_POST['email'];
+  $_SESSION['password']=$_POST['password'];
+
+  //Verify credentials from Imonggo
+  $url = 'https://'.$_SESSION['acct_id'].'.c3.imonggo.com/api/tokens.xml?email='.$_SESSION['email'].'&password='.$_SESSION['password'];
+  $result = (string)get_token($url);
+
+  if($result != NULL){
+      
+    $_SESSION['imonggo_api_token']= $result;
+    header('Location:main.php'); 
+
+  }else{
+    echo "here";
+  }
+
+} 
+
 ?>
 
 

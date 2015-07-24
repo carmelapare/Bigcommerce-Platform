@@ -31,7 +31,13 @@ include 'API_keys.php';
         if(($intersect_count==1) && in_array($product->id, $inventories)){
 
           //1. checks if product does not exist in Bigcommerce
-          if(get_file($GLOBALS['bigcommerce_URL'].'/api/v2/products?name='.$product->name, $username, $pw)==NULL){
+
+          //get product id from database
+          $query = "SELECT bigcommerce_id FROM product_invoice where imonggo_id='$product->id'";
+          $result = mysql_query($query);
+          $row = mysql_fetch_array($result);
+
+          if(get_file($GLOBALS['bigcommerce_URL'].'/api/v2/products/'.$row[0], $username, $pw)==NULL){
             
             //1.1 checks if product on imonggo is not deleted
             //if deleted, nothing will be posted on Bigcommerce

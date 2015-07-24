@@ -1,6 +1,13 @@
 <?php
 
+session_start();
+
+if(!isset($_SESSION['imonggo_api_token'])){
+  header('Location:home1.php');
+}
+
 include 'post_get.php';
+
 
 //get products available on-hand
 $inventories = array_filter(get_inventories());
