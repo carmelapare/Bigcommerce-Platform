@@ -16,4 +16,4 @@ BIN is a platform used to integrate your Bigcommerce store to Imonggo, a web-bas
 1. Go to xampp > apache > bin > php.ini
 2. Uncomment the line "extension=php_curl.dll" to enable cURL PHP.
 
-YOU'RE OFF TO MANAGING YOUR STORE!
+YOU'RE OFF TO EXPERIENCING BIN!
