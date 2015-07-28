@@ -65,7 +65,6 @@ function get_file($url, $username, $pw) {
             $result  = curl_exec($ch);
             curl_close($ch);
 
-            echo $result;
             return $result;
             
     }

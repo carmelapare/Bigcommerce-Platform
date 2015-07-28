@@ -1,0 +1,33 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+body{
+  font-family: 'Ubuntu', sans-serif !important;
+}
+
+
+input{
+	width: 10px;
+}
+
+#login_form{
+	height: 90%;
+	width: 30% !important;
+	opacity: 6.0 !important;
+}
+
+
+.cd-intro{
+	margin-left: 8% !important;
+	margin-top: -10%;
+	padding-bottom: 2%;
+}
+
+b{
+	color: rgb(127,127,127);
+}
+
+#login_btn{
+	margin-top: 80%;
+	margin-left: 15%;
+}
+

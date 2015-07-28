@@ -7,6 +7,8 @@ include 'API_keys.php';
 //This function posts products on Bigcommerce without tag filters
   function parse_all_products($url, $xml_file,$username, $pw,$inventories){
 
+  foreach($xml_file->product as $product){
+
    //Checks if there is product available on-hand(based on inventory)
     if(in_array($product->id, $inventories)){
 
@@ -104,6 +106,7 @@ include 'API_keys.php';
       }
     }
   }
+}
 
 //=======================================PARSE PRODUCTS======================================
 
@@ -111,6 +114,8 @@ include 'API_keys.php';
 	function parse_products($url, $xml_file,$username, $pw,$tags,$inventories){
 
 		foreach($xml_file->product as $product){
+      echo $product->status.'='.$product->name;
+      echo '<br>';
 
       //If there are no selected tags, post all products
       if(count($tags)!=0){
@@ -139,6 +144,8 @@ include 'API_keys.php';
             //1.1 Checks if product on imonggo is not deleted and contains the tag/s selected
             //If deleted, nothing will be posted on Bigcommerce
             if($product->status!='D' && $intersect_count==1){
+
+              echo $product->name.':'.$product->status.'NOT D, NOT EX <br>';
               
               //Posts product on bigcommerce
               $xml_product_content =
@@ -167,7 +174,9 @@ include 'API_keys.php';
           else{
             
             //2.1 Checks if product is not deleted on Imonggo and contains the tag/s selected
-            if($product->status!="D" && $intersect_count==1){
+            if($product->status !='D' && $intersect_count==1){
+
+               echo $product->name.':'.$product->status.'NOT D,  EX <br>';
 
               //Updates product on bigcommerce
               $xml_product_content =
@@ -197,8 +206,9 @@ include 'API_keys.php';
             }
 
             //If deleted, hide product from Bigcommerce Store regardless the tag of the product
-            else{
-
+            elseif($product->status =='D'){
+               echo $product->status;
+               echo $product->name.':'.$product->status.' D,  EX <br>';
               //Updates product on bigcommerce
               $xml_product_content =
 

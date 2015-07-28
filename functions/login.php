@@ -43,55 +43,35 @@ if(isset($_POST['login'])){
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-    <link type="text/css" rel="stylesheet" href="../assets/css/imonggo.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="../assets/css/login.css"  media="screen,projection"/> 
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Resource style -->
-
-    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="../assets/css/login_form.css"  media="screen,projection"/>
+     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="../assets/css/materialize.min.css"  media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
-  <body>
+  <body >
 
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="../assets/js/materialize.min.js"></script>
-  <script src="../assets/js/modernizr.js"></script> <!-- Modernizr -->
-  <script src="../assets/js/main.js"></script> <!-- Resource jQuery -->
-
 
   <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <div class="row center">
-        <img src="../assets/icons/logo.png"></img>
-        <br><br><br><br><br><br>
-        <section class="cd-intro" style="margin-left:-40%;">
-          <h1 class="cd-headline rotate-1">
-            <span class="cd-words-wrapper">
-              <b class="is-visible"style="letter-spacing:5px;">Manage products</b>
-              <b style="letter-spacing:5px;">Update customers</b>
-              <b style="letter-spacing:5px;">Transfer invoices</b>
-              <b style="letter-spacing:5px;">Track inventories</b>
-            </span>
-          </h1>
-          </section> <!-- cd-intro --> 
+    <div class ="container">
+      <div class ="row">
+        <div class="col s3 offset-s1">
+          <img class="responsive-img" src="../assets/icons/bg.png" style="position:fixed">
+        </div>
+        <div class="col s5 offset-s7">
+           <a class="modal-trigger waves-effect waves-light  waves-light yellow accent-4 btn-large" id="login_btn" data-target="login_form">LOGIN</a>
+        </div>
       </div>
-
-      <div class="row center">
-          <a class="modal-trigger waves-effect waves-light  waves-light orange accent-4 btn-large" data-target="login_form">LOGIN</a>
-      </div>
-      <br><br>
     </div>
 
-    <div class="footer-copyright">
-      <div class="row center">
+    <div class="row center">
       Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-      </div>
-    </div>
+    </div>   
   </div>
 
-  <!-- Modal Structure -->
   <form method="POST">
   <div id="login_form" class="modal modal-fixed-footer">
     <div class="modal-content" style="overflow:auto">
@@ -146,13 +126,13 @@ if(isset($_POST['login'])){
         </p>
     </div>
     <div class="modal-footer">
-      <button class="btn waves-effect waves-light orange accent-4" type="submit" name="login">SUBMIT<i class="small material-icons right">send</i></button>
+      <button class="btn waves-effect waves-light yellow accent-4" type="submit" name="login">SUBMIT<i class="small material-icons right">send</i></button>
     </div>
   </div>
   </div>
   </form>
 
-  <script>
+   <script>
     $(document).ready(function(){
       $('.modal-trigger').leanModal();
     });
