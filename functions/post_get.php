@@ -11,45 +11,66 @@ $db = mysql_select_db('bigcommerce_imonggo', $conn);
 
 //==============================GET FUNCTIONS========================================
 
+//This function pulls products from Imonggo and returns an array of arrays consisting tags and products 
 function get_products(){
+
 	$username = $GLOBALS['imonggo_api_key'];
 	$pw = 'x';
 	$response = get_file($GLOBALS['imonggo_URL'].'/api/products.xml', $username, $pw);
 
-	//parse tags
 	$tags = array();
 	foreach($response->product as $product){
+		//Stores each unique tag to an array
 		if($product->tag_list != ""){
 			$tags_per_product = explode(",",preg_replace('/\s+/','', strtolower($product->tag_list)));
 			$tags = array_unique(array_merge($tags, $tags_per_product));
 		}
 	}
 
-
     $return = array();
     array_push($return, $response, $tags);
-    return $return;
-  
+    return $return; 
 }
 
-function get_customers(){
-	$username = $GLOBALS['bigcommerce_username'];
-	$pw =$GLOBALS['bigcommerce_api_key'];
-	$response =get_file($GLOBALS['bigcommerce_URL'].'/api/v2/customers' , $username, $pw);
-	post_customers($response);
-}
+//This function pulls products from Imonggo and returns an array of arrays consisting tags and products 
+function get_all_products($inventories){
 
-function get_invoices(){
-	$username = $GLOBALS['bigcommerce_username'];
-	$pw =$GLOBALS['bigcommerce_api_key'];
-	$response = get_file($GLOBALS['bigcommerce_URL'].'/api/v2/orders' , $username, $pw);
-	$result = post_invoices($response);
+	$username = $GLOBALS['imonggo_api_key'];
+	$pw = 'x';
+	$response = get_file($GLOBALS['imonggo_URL'].'/api/products.xml', $username, $pw);
 
-	return $result;
+	$url = $GLOBALS['bigcommerce_URL'].'/api/v2/products';
+	$username1 = $GLOBALS['bigcommerce_username'];
+	$pw1 =$GLOBALS['bigcommerce_api_key'];
+
+	parse_all_products($response,$username1, $pw1,$inventories);
 	
 }
 
+
+//This function pulls customers from Bigcommerce
+function get_customers(){
+
+	$username = $GLOBALS['bigcommerce_username'];
+	$pw =$GLOBALS['bigcommerce_api_key'];
+	$response =get_file($GLOBALS['bigcommerce_URL'].'/api/v2/customers' , $username, $pw);
+
+	post_customers($response);
+}
+
+function get_invoices($inventories){
+
+	$username = $GLOBALS['bigcommerce_username'];
+	$pw =$GLOBALS['bigcommerce_api_key'];
+	$response = get_file($GLOBALS['bigcommerce_URL'].'/api/v2/orders' , $username, $pw);
+	$result = post_invoices($response,$inventories);
+	
+}
+
+
+//This function pulls inventories from imonggo and returns an array of products available on-hand
 function get_inventories(){
+
 	$url = $GLOBALS['imonggo_URL'].'/api/inventories.xml';
 	$username = $GLOBALS['imonggo_api_key'];
 	$pw ='x';
@@ -57,9 +78,10 @@ function get_inventories(){
 
 	$result = array();
 
-	//returns an array of products available on-hand
 	foreach ($response->inventory as $inventory){
+		//Checks if product is available
 		if($inventory->quantity > 0){
+
 			array_push($result, (string)$inventory->product_id);
 		}
 	}
@@ -70,12 +92,13 @@ function get_inventories(){
 
 //==============================POST FUNCTIONS=======================================
 
-function post_products($response, $tags,$inventories){
+function post_products($response,$inventories){
+
 	$url = $GLOBALS['bigcommerce_URL'].'/api/v2/products';
 	$username = $GLOBALS['bigcommerce_username'];
 	$pw =$GLOBALS['bigcommerce_api_key'];
 
-    parse_products($url, $response,$username, $pw, $tags,$inventories);
+    parse_products($url, $response,$username, $pw,$inventories);
 }
 
 function post_customers($response){
@@ -87,7 +110,7 @@ function post_customers($response){
 }
 
 
-function post_invoices($response){
+function post_invoices($response,$inventories){
 
 		$url = $GLOBALS['imonggo_URL'].'/api/invoices.xml';
 		$username = $GLOBALS['imonggo_api_key'];
@@ -114,12 +137,26 @@ function post_invoices($response){
 		}
 		
 	
-		$result = parse_invoices($url, $response,$username, $pw);
+		$result = parse_invoices($url, $response,$username, $pw,$inventories);
 
 		return $result;
 }
 
 
+
+//==============================UPDATE FUNCTIONS=======================================
+//This function pulls enabled customers on Imonggo and updates them on Bigcommerce
+function update_get_customers(){
+
+	$username = $GLOBALS['imonggo_api_key'];
+	$pw ='x';
+	$response =get_file($GLOBALS['imonggo_URL'].'/api/customers.xml?active_only=1' , $username, $pw);
+
+	$username1 = $GLOBALS['bigcommerce_username'];
+	$pw1 = $GLOBALS['bigcommerce_api_key']; 
+
+	parse_update_customers($response,$username1,$pw1);
+}
 
 
 ?>
