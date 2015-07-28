@@ -92,13 +92,13 @@ function get_inventories(){
 
 //==============================POST FUNCTIONS=======================================
 
-function post_products($response,$inventories){
+function post_products($response,$tags,$inventories){
 
 	$url = $GLOBALS['bigcommerce_URL'].'/api/v2/products';
 	$username = $GLOBALS['bigcommerce_username'];
 	$pw =$GLOBALS['bigcommerce_api_key'];
 
-    parse_products($url, $response,$username, $pw,$inventories);
+    parse_products($url, $response,$username, $pw,$tags,$inventories);
 }
 
 function post_customers($response){
@@ -106,7 +106,7 @@ function post_customers($response){
 	$username = $GLOBALS['imonggo_api_key'];
 	$pw = 'x';
 
-	parse_customers($url, $response,$username, $pw);
+	parse_customers($url, $response,$username,$pw);
 }
 
 

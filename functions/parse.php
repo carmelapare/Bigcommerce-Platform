@@ -17,9 +17,9 @@ include 'API_keys.php';
       $row = mysql_fetch_array($result);
 
       if($row[0] == NULL){
-        //1.1 Checks if product on imonggo is not deleted and contains the tag/s selected
+        //1.1 Checks if product on imonggo is not deleted 
         //If deleted, nothing will be posted on Bigcommerce
-        if($product->status!='D' && $intersect_count==1){
+        if($product->status!='D'){
               
         //Posts product on bigcommerce
           $xml_product_content =
@@ -44,8 +44,8 @@ include 'API_keys.php';
       }
       //2. Product already exists in Bigcommerce
       else{
-        //2.1 Checks if product is not deleted on Imonggo and contains the tag/s selected
-        if($product->status!="D" && $intersect_count==1){
+        //2.1 Checks if product is not deleted on Imonggo
+        if($product->status!="D"){
         //Updates product on bigcommerce
           $xml_product_content =
           '<?xml version="1.0" encoding="UTF-8"?>
