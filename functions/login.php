@@ -104,7 +104,7 @@ if(isset($_POST['login'])){
             <div class="row">
               <div class="input-field col s12">
                 <input id="username" name="username" type="text" class="validate" required>
-                <label for="username">Username<i class="tiny material-icons left">account_box</i></label>
+                <label for="username">Username<i class="tiny material-icons left">account_circle</i></label>
               </div>
             </div>
 

@@ -1,24 +1,46 @@
-.collapsible-header.black{
-	color: white;
-	border-bottom: 1px solid black;
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+body{
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
-.collapsible-header.blue-grey.darken-4{
-	color: white;
-	border-bottom: 1px solid #263238;
+nav {
+    color: black;
+    background-color: #ffeb3b;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
 }
 
-.collapsible-header.blue-grey.darken-1{
-	color: white;
-	border-bottom: 1px solid #546e7a;
+#main_bg{
+	margin-top: -1%;
+	z-index: -1;
+	position: fixed;
 }
 
 
-img{
-	opacity: 0.8;
+#logo{
+
+	height: 25%;
+	width:	25%;
+}
+
+form{
+	margin-left: 20%;
+	margin-top: 1%;
+	position: absolute;
 }
 
 
 #multiple_prod{
 	width: 30%;
+}
+
+#customer_row{
+	margin-top: 10%;
+	margin-left: 53%;
+}
+
+#invoice_row{
+	margin-top: 15%;
 }
