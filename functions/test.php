@@ -153,7 +153,6 @@ if(isset($_GET['post_all_products'])){
                 <br><br>
                 <ul>
                   <?php
-                  //Creates checkboxes for generated tags
                     $name=0;
                      if(count($tags) != 0){
                       foreach ($tags as $tag){

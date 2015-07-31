@@ -32,6 +32,7 @@ include 'API_keys.php';
             <description>'.(string)$product->description.'</description>
             <price>'.(string)$product->retail_price.'</price>
             <is_visible>true</is_visible>
+           
             <categories>
               <value>2</value>
             </categories>
@@ -57,6 +58,7 @@ include 'API_keys.php';
             <description>'.(string)$product->description.'</description>
             <price>'.(string)$product->retail_price.'</price>
             <is_visible>true</is_visible>
+           
             <categories>
               <value>2</value>
             </categories>
@@ -87,6 +89,7 @@ include 'API_keys.php';
             <description>'.(string)$product->description.'</description>
             <price>'.(string)$product->retail_price.'</price>
             <is_visible>false</is_visible>
+           
             <categories>
               <value>2</value>
             </categories>
@@ -114,8 +117,7 @@ include 'API_keys.php';
 	function parse_products($url, $xml_file,$username, $pw,$tags,$inventories){
 
 		foreach($xml_file->product as $product){
-      echo $product->status.'='.$product->name;
-      echo '<br>';
+      
 
       //If there are no selected tags, post all products
       if(count($tags)!=0){
@@ -145,7 +147,7 @@ include 'API_keys.php';
             //If deleted, nothing will be posted on Bigcommerce
             if($product->status!='D' && $intersect_count==1){
 
-              echo $product->name.':'.$product->status.'NOT D, NOT EX <br>';
+        
               
               //Posts product on bigcommerce
               $xml_product_content =
@@ -157,6 +159,7 @@ include 'API_keys.php';
                     <description>'.(string)$product->description.'</description>
                     <price>'.(string)$product->retail_price.'</price>
                     <is_visible>true</is_visible>
+                    
                     <categories>
                        <value>2</value>
                         </categories>
@@ -176,7 +179,6 @@ include 'API_keys.php';
             //2.1 Checks if product is not deleted on Imonggo and contains the tag/s selected
             if($product->status !='D' && $intersect_count==1){
 
-               echo $product->name.':'.$product->status.'NOT D,  EX <br>';
 
               //Updates product on bigcommerce
               $xml_product_content =
@@ -188,6 +190,7 @@ include 'API_keys.php';
                     <description>'.(string)$product->description.'</description>
                     <price>'.(string)$product->retail_price.'</price>
                     <is_visible>true</is_visible>
+                   
                     <categories>
                        <value>2</value>
                         </categories>
@@ -207,8 +210,7 @@ include 'API_keys.php';
 
             //If deleted, hide product from Bigcommerce Store regardless the tag of the product
             elseif($product->status =='D'){
-               echo $product->status;
-               echo $product->name.':'.$product->status.' D,  EX <br>';
+             
               //Updates product on bigcommerce
               $xml_product_content =
 
@@ -219,6 +221,7 @@ include 'API_keys.php';
                     <description>'.(string)$product->description.'</description>
                     <price>'.(string)$product->retail_price.'</price>
                     <is_visible>false</is_visible>
+                  
                     <categories>
                        <value>2</value>
                         </categories>
@@ -235,6 +238,43 @@ include 'API_keys.php';
 
               $put_result = put_file($url_put, $xml_product_content,$username, $pw);
             }
+          }
+        }else{
+          //1. Checks if product has been posted on Bigcommerce
+          //Gets product ID from database
+          $query = "SELECT bigcommerce_id FROM product_invoice where imonggo_id='$product->id'";
+          $result = mysql_query($query);
+          $row = mysql_fetch_array($result);
+
+          //If it is has been posted on Bigcommerce, hide the out-of-stock product
+          if($row[0] != NULL){
+
+              $xml_product_content =
+
+                '<?xml version="1.0" encoding="UTF-8"?>
+                  <product>
+                    <name>'.(string)$product->name.'</name>
+                    <type>physical</type>
+                    <description>'.(string)$product->description.'</description>
+                    <price>'.(string)$product->retail_price.'</price>
+                    <is_visible>false</is_visible>
+                   
+                    <categories>
+                       <value>2</value>
+                        </categories>
+                    <availability>available</availability>
+                    <weight>0.0</weight>
+                  </product>';
+
+              //Gets product id from database
+              $query = "SELECT bigcommerce_id FROM product_invoice where imonggo_id='$product->id'";
+              $result = mysql_query($query);
+              $row = mysql_fetch_array($result);
+
+              $url_put=$GLOBALS['bigcommerce_URL'].'/api/v2/products/'.$row[0];
+
+              $put_result = put_file($url_put, $xml_product_content,$username, $pw);
+            
           }
         }
       }
@@ -292,7 +332,7 @@ function post_to_db($result,$id){
                   <email>'.(string)$customer->email.'</email>
                 </customer>';
 
-                echo $xml;
+               
               $result = post_file($url, $xml, $username, $pw);
 
               //Posts customer to database for mapping
@@ -380,7 +420,6 @@ function post_to_db($result,$id){
       //Bigcommerce's status for completed order is '10'
        if($order->status_id==10){
 
-        echo "order_id:".$order->id;
 
          $xml_part1=  '<?xml version="1.0" encoding="UTF-8"?>
                       <invoice>

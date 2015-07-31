@@ -1,7 +1,7 @@
 <?php
 
 //=========================================GET FUNCTION=========================================
-
+//This function sends GET requests to a given URL 
 
 function get_file($url, $username, $pw) {
 
@@ -38,6 +38,7 @@ function get_file($url, $username, $pw) {
 
 //=======================================POST FUNCTION======================================
 
+    //This function sends POST requests to a given URL 
     function post_file($url, $xml, $username, $pw){
 
 
@@ -71,6 +72,7 @@ function get_file($url, $username, $pw) {
 
 //=======================================PUT FUNCTION======================================
 
+    //This function sends PUT requests to a given URL 
     function put_file($url, $xml, $username, $pw){
 
 
@@ -105,6 +107,7 @@ function get_file($url, $username, $pw) {
     }
 
 //=========================================GET FUNCTION=========================================
+//This function requests for Imonggo API Token given the user email and password
 function get_token($url) {
 
    
